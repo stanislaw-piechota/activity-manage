@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+
+{% block body %}
+    <br/>
+    <form id="menu" method="POST" >
+        {% csrf_token %}
+        <button name='manage' type='submit' value='click'>Zarządzanie aktywnością</button>
+        <button name='see' type='submit' value='click'>Podgląd aktywności</button>
+    </form>
+{% endblock %}

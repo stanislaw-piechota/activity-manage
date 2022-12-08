@@ -1,0 +1,130 @@
+{% extends 'main/base.html' %}
+
+{% block body %}
+    {% if verified %}
+        <div class="form-row">
+            <h3>Wybierz klasę</h3>
+            <form class="form-row" style="margin-top:0px;">
+                <select name="class-select" id="class-select">
+                    {% for class in classes %}
+                    <option value="">Wybierz</option>
+                    <option value="{{class}}">{{class}}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        <script>
+            function changeClass(event){
+                document.cookie = "class="+document.getElementById('class-select').value;
+                location.reload();
+            }
+            
+            const select = document.getElementById('class-select');
+            select.addEventListener('change', changeClass);
+            select.value = "{{select}}";   
+        </script>
+        <br/>
+        {% if select %}
+        
+            <div id="main">
+                <div style="margin-right:200px;">
+                    <h4>Lista uczniów</h4>
+                    <form method="POST" style="margin-top: 0px;">
+                        {% csrf_token %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Numer</th>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>Oceny</th>
+                                    <th>Plusy</th>
+                                    <th>Wybierz</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <td>{{student.number}}</td>
+                                        <td>{{student.name}}</td>
+                                        <td>{{student.second_name}}</td>
+                                        <td>{{student.grades}}</td>
+                                        <td>{{student.pluses}}</td>
+                                        <td><input name="check-{{student.number}}" type="checkbox" 
+                                            {% if student.visibility %}
+                                                checked
+                                            {% endif %}
+                                        /></td>
+                                    </tr>   
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <button type="submit" name="refresh" value="clicked" style="height:35px;padding:0;font-size:15px;">
+                            Odśwież
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <h4>Zgłoszenia</h4>
+                    <form style="margin-top: 0px;" method="POST">
+                        {% csrf_token %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Imię</th>
+                                    <th>Nazwisko</th>
+                                    <th>Oceny</th>
+                                    <th>Plusy</th>
+                                    <th>Dodaj</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in visible %}
+                                    <tr>
+                                        <td>{{student.name}}</td>
+                                        <td>{{student.second_name}}</td>
+                                        <td>{{student.grades}}</td>
+                                        <td>{{student.pluses}}</td>
+                                        <td>
+                                            <button 
+                                                style="all: inherit; background-color:#161a1d; border-radius: 10px;"
+                                                value="add-{{student.number}}"
+                                                name="adding"
+                                                type="submit"
+                                            >
+                                                <b>+</b>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                    <button style="height:35px;padding:0;font-size:15px" value="clicked" name="random" id="random">
+                        Losuj
+                    </button>
+                    <script>
+                        function losuj(event){
+                            let visible = [
+                                {% for student in visible %}
+                                "{{student}}",
+                                {% endfor %}
+                            ];
+                            alert("Wylosowano: "+visible[Math.floor(Math.random()*visible.length)]);
+                        }
+
+                        document.getElementById('random').addEventListener('click', losuj);
+                    </script>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <input type="password" name="pin" placeholder="Podaj PIN" />
+                <button type="submit">Zatwierdź</button>
+            </div>
+        </form>
+    {% endif %}
+{% endblock body %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Aktywność PLOPŁ</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Kanit">
+        <style type="text/css">
+            html {
+                box-sizing: border-box;
+            }
+            body {
+                background-color: #a4161a;
+                color: #d3d3d3;
+                font-family: Kanit;
+                text-align-last: center;
+                min-height: 600px;
+            }
+            button {
+                text-align: center;
+                background-color: #161a1d;
+                border: 0;
+                padding: 20px 0 20px 0;
+                height: 75px;
+                font-size: 20px;
+                border-radius: 10px;
+                color: #d3d3d3;
+                min-width: 150px;
+                margin-top: 30px;
+            }
+            input {
+                height: 73px;
+                border-radius: 10px;
+                border: 0;
+                min-width: 300px;
+                text-align: center;
+                font-size: 20px;
+            }
+            #menu {
+                min-width: 400px;
+            }
+            form {
+                margin-top: 30px;
+            }
+            #menu{
+                display: inline-grid;
+            }
+            .form-row {
+                display: inline-flex;
+            }
+            .form-row > input{
+                border-radius: 10px 0px 0px 10px;
+            }
+            .form-row > button {
+                margin-top: 0px;
+                border-radius: 0px 10px 10px 0px;
+            }
+            body > div > h3 {
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-right: 30px;
+                padding: 0;
+            }
+            .form-row > select {
+                border-radius: 10px;
+                min-width: 100px;
+                max-height: 3em;
+            }
+            td {
+                padding: 0 20px 0 20px;
+            }
+            #main {
+                margin-top: 50px;
+                position: relative;
+                display: inline-flex;
+            }
+            input[type=checkbox] {
+                height: 20px;
+                transform: scale(1.5);
+                min-width: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Zarządzanie aktywnością</h1>
+        {% block body %}{% endblock %}
+    </body>
+</html>
